@@ -13,18 +13,18 @@ class MNIST(object):
         self.train_img_fname = 'train-images-idx3-ubyte'
         self.train_lbl_fname = 'train-labels-idx1-ubyte'
 
-        self.test_images = []
-        self.test_labels = []
+        self.data = []
+        self.labels = []
 
-        self.train_images = []
-        self.train_labels = []
+        self.data_img = []
+        self.label = []
 
     def load_testing(self):
         ims, labels = self.load(os.path.join(self.path, self.test_img_fname),
                                 os.path.join(self.path, self.test_lbl_fname))
 
-        self.test_images = ims
-        self.test_labels = labels
+        self.data = ims
+        self.labels = labels
 
         return ims, labels
 
@@ -32,8 +32,8 @@ class MNIST(object):
         ims, labels = self.load(os.path.join(self.path, self.train_img_fname),
                                 os.path.join(self.path, self.train_lbl_fname))
 
-        self.train_images = ims
-        self.train_labels = labels
+        self.data_img = ims
+        self.label = labels
 
         return ims, labels
 
@@ -53,14 +53,14 @@ class MNIST(object):
                 raise ValueError('Magic number mismatch, expected 2051,'
                                  'got {}'.format(magic))
 
-            image_data = array("B", file.read())
+            image_data_img = array("B", file.read())
 
         images = []
         for i in range(size):
             images.append([0] * rows * cols)
 
         for i in range(size):
-            images[i][:] = image_data[i * rows * cols:(i + 1) * rows * cols]
+            images[i][:] = image_data_img[i * rows * cols:(i + 1) * rows * cols]
 
         return images, labels
 
